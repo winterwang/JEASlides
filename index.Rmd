@@ -7,7 +7,7 @@ author:
       1. Aichi Medical University <br> 2. NNEdPro Global Centre for Nutrition and Health
       <br> 3. London School of Hygiene & Tropical Medicine ]
 date: 
-      .small[2020-02-21 15:40 - :16:50 O-024<br> 
+      .small[2020-02-21 16:30 - :16:40 O-024<br> 
        京都大学国際科学イノベーション棟]
 output:
   xaringan::moon_reader:
@@ -21,19 +21,70 @@ output:
       countIncrementalSlides: false
 ---
 
+---
+class: middle, center
+
+# Conflit of Interest disclosure
+
+Chaochen Wang <br>
+Suzana Almoosawi <br>
+Luigi Palla
+
+
+We have no, real or perceived, direct or indirect conflicts of interest that relate to this presentation.
+
+
+
+---
+class: middle
+
+## Background & Objectives
+
+
+- Eating late/having a late dinner was found to related with higher risk of obesity, hyperglycemia, metabolic syndrome, and diabetes.
+
+- The relationship between food choice and their time of consumption is still largely unknown.
+
+- Identify those unhealthy foods that might be chosen during night time would be helpful. 
+
+- To investigate and describe the relationships between **food** eaten by British adults, **time slots** and **type 2 diabetes status (DM)**.
+
+
+
+---
+class: middle 
+
+## Data Source - the NDNS RP
+
+- NDNS RP (started from 2008): 
+    - On-going cross-sectional study
+    - representative of UK population <br> about 1000/year
+    - 4 consecutive days food diary
+    
+- 6802 adults (age >= 19 years) 
+    - 2810 men and 3992 women; 
+    - 749,026 recordings of food group entries.
+
+
+---
+class: middle 
+
+## Methods and strategies
+
+- Correspodence analysis (CA)
+    - Biplots in total sample and stratified by DM status
+
+- Logistic regression models using generalized estimating equation (GEE). 
+
+- Generate hypotheses from half of the food recordings, and test using the other half.
+
+- Time slots defined: <br> 6-9 am, 9-12 noon, 12-2 pm, 2-5 pm, 5-8 pm, <br> 8-10 pm and 10 pm-6 am.
 
 
 ---
 class: middle, center, inverse
 
-# Food group consumption and time slots
-
----
-class: middle
-
-## Objectives
-
-- To investigate and describe the relationshipt between **food** eaten by British adults, **time slots** and **diabetes status**.
+# An one-day example of the food diary
 
 
 ---
@@ -51,21 +102,6 @@ background-image: url("./img/Diary03.png")
 background-position: 50% 50%
 background-size: contain
 
-
----
-class: middle 
-
-## Methods and strategies
-
-- Correspodence analysis (CA)
-    - Biplots stratified by diabetes status
-
-- Mixed effect logistic regression using generalized estimating equation (GEE). 
-
-- Generate hypotheses from half of the food recordings, and test using the other half.
-
-- Time slots defined:  6-9 am, 9-12 noon, 12-2 pm, 2-5 pm, 5-8 pm, 8-10 pm and 10 pm-6 am.
-
 ---
 class: middle 
 
@@ -77,53 +113,30 @@ library(knitr)
 library(kableExtra)
 
 dt <- read.csv("tab/DMstatus.csv", header = TRUE)
-names(dt) <- c("Diabetes Status", "Self-reported", "Glucose (mmol/L)", "HbA1c (%)", "n")
+names(dt) <- c("DM Status", "Self-reported", "Glucose (mmol/L)", "","HbA1c (%)", "n")
 # names(dt)[9] <- "Total"
 # dt[2, 9] <- " "
 # dt[c(4,5), 9] <- " "
 dt %>%
-  kable() %>%
+  kable(align = "c") %>%
   kable_styling(bootstrap_options = c("striped", "hover"))  %>% 
   column_spec(1, bold = T)
 ```
 
-
----
-class: middle 
-
-## Summary statistics 
-
-6802 adults (age >= 19 years), 2810 men and 3992 women from NDNS RP data (2008-2018). 749,026 recordings of food group entries.
-
-.small[
-```{r echo=FALSE, message=FALSE, warning=FALSE}
-load("../CA-NDNSRP/Food1_9_adlt_labl.Rdata")
-
-timeN <- Food1_9_adlt %>% 
-  ungroup() %>% 
-  group_by(MealTimeSlot) %>% 
-  summarise(n = n()) %>% 
-  mutate(relfreq = n/sum(n)) %>% 
-  mutate(rel.freq = paste0(round(100 * n/sum(n), 3), "%"))  %>% 
-  mutate(cum.freq = paste0(round(100 * cumsum(relfreq), 3), "%")) %>% 
-  select(-relfreq)
-
-timeN %>%
-  kable() %>%
-  kable_styling(bootstrap_options = c("striped", "hover"))  %>% 
-  column_spec(1, bold = T)
-```
-]
 
 
 ---
 class: middle
 ### Food groups and contribution to calories
 
+.between[[link to full table: http://wangcc.me/CA-NDNSRP_fordiscuss/#12_food_groups](http://wangcc.me/CA-NDNSRP_fordiscuss/#12_food_groups)]
 
 .small[
 ```{r echo=FALSE, message=FALSE, eval=TRUE}
+load("../CA-NDNSRP/Food1_9_adlt_labl.Rdata")
+
 TableFoogGroup_adt <- Food1_9_adlt %>% 
+  # select(- Hpoint) %>% 
   ungroup() %>% 
   group_by(mfgLab) %>% 
   summarise(n = n(), meanHpoint = mean(H_points, na.rm = T), mfgCalories = sum(Energykcal)) %>% 
@@ -136,7 +149,7 @@ TableFoogGroup_adt <- Food1_9_adlt %>%
   mutate(healthy     = meanHpoint < -2, 
          lesshealthy = meanHpoint > 4, 
          neutral     = (meanHpoint <= 4) & (meanHpoint >= -2)) %>% 
-  select(mfgLab, n, Hpoint, n.freq, cal.Prop, calcumprop)
+  select(mfgLab, n, n.freq, cal.Prop, calcumprop)
 
 DT::datatable(
   head(TableFoogGroup_adt, 60),  escape=FALSE, 
@@ -168,49 +181,50 @@ DT::datatable(
 ]
 
 
-
-
 ---
 class: middle, center, inverse
 
 # CA biplots in total sample
 
 ---
-background-image: url("./img/F60T7.png")
+background-image: url("./img/TotalSampleCA.png")
 background-position: 50% 50%
 background-size: contain
 
 ???
 
-- It seems that later time in the day (8 pm- 10pm-) are shown on the upper side of the plot. 
 
-- Morning time people are having breakfast foods (cereals/milk)
+- Correspondence analysis allows us to plot both the points of time and food in the same figure where here we see later time are in the upper side of the graph. And when food and time points are close together and away from the origin then it is suggested that there is an association. 
+
+- Therefore, in the graph, food appears close to the time, means they were consumed at that time.
+
+- It seems that later time in the day (8 pm- 10pm-) are shown on the upper side of the plot. (later time slots (8pm - 10pm, 10pm - 6am) are different from the earlier hours) 
+- During morning time people are having breakfast foods (cereals/milk)
 
 - Chocolate, Bear, Spirits, sugar candy, sweetened soft drinks are clouded around later times. 
 
 
----
-background-image: url("./img/F201T7.png")
-background-position: 50% 50%
-background-size: contain
+<!-- --- -->
+<!-- background-image: url("./img/F201T7.png") -->
+<!-- background-position: 50% 50% -->
+<!-- background-size: contain -->
 
-???
-
-- it is clearer that late time slots (8pm - 10pm, 10pm - 6am) are different from the earlier hours in stratified figures by food groups (for better visualisation)
+<!-- ??? -->
 
 
 
----
-background-image: url("./img/F202T7.png")
-background-position: 50% 50%
-background-size: contain
+
+<!-- --- -->
+<!-- background-image: url("./img/F202T7.png") -->
+<!-- background-position: 50% 50% -->
+<!-- background-size: contain -->
 
 
 
----
-background-image: url("./img/F203T7.png")
-background-position: 50% 50%
-background-size: contain
+<!-- --- -->
+<!-- background-image: url("./img/F203T7.png") -->
+<!-- background-position: 50% 50% -->
+<!-- background-size: contain -->
 
 
 
@@ -237,7 +251,7 @@ background-size: contain
 
 ???
 
-- For Diagnosed DM patients (self-reported), beer, spirits, chocolate, biscuits, regular sweetened soft drinks are apear close to time after 8 pm. 
+- For Diagnosed DM patients (self-reported), beer, spirits, chocolate, biscuits, regular sweetened soft drinks appear close to time after 8 pm. 
 
 
 ---
@@ -247,7 +261,7 @@ background-size: contain
 
 ???
 
-- Among undiagnosed DM patients, sugar, chocolate, Beer, regular soft drinks, wine, ice cream, biscuits, Puddings seems to apear to shown in later time slots. 
+- Among undiagnosed DM patients, sugar, chocolate, Beer, regular soft drinks, ice cream, biscuits, Puddings seems to appear to shown in later time slots. 
 
 
 ---
@@ -255,30 +269,34 @@ background-image: url("./img/F60T7_PreDM.png")
 background-position: 50% 50%
 background-size: contain
 
+---
+class:  middle 
+
+## Summary
+
+.med[
+- Foods colored in **red** for further hypotheses testing as they are considered to be relatively unhealthy and possibly being consumed differently by diabetes status.
+
+- Sugar confectioneries, regular soft drinks, chocolates appear much further at the top of the figures among non diagnosed diabetes patients compared to the other participants. 
+]
+
 
 ---
 class:center
 
-##### OR for food groups eaten at night (8pm - ) vs. earlier time, among total and according to DM status
+#### OR (99% CI) for foods eaten at night (8pm - 6am) vs. earlier time, among total and according to DM status
 
 
 
 
-.between[
+.tiny[
 ```{r echo=FALSE, message=FALSE, eval=TRUE}
 dt <- read.csv("tab/OR_Tslots.csv", header = TRUE)
-names(dt) <- c("H0", "Overall", "Non-DM", "Pre-DM", "Undiag-DM", "DM")
-# names(dt)[9] <- "Total"
-# dt[2, 9] <- " "
-# dt[c(4,5), 9] <- " "
-# dt %>%
-#   kable() %>%
-#   kable_styling(bootstrap_options = c("striped", "hover"))  %>% 
-#   column_spec(1, bold = T)
+names(dt) <- c("H0", "Overall", "Healthy", "Pre-DM", "Undiag-DM", "DM")
 
 DT::datatable(
   head(dt, 9),  escape=FALSE, 
-  fillContainer = FALSE, options = list(pageLength = 4)
+  fillContainer = FALSE, options = list(pageLength = 5)
 )
 ```
 ]
@@ -296,9 +314,6 @@ class: middle
 
 - Food and drinks consumed in the evening/night time slot tend to be highly processed and easily accessible.
 
-<!-- - Potentially alcoholic/sweetened beverages and foods rich in added sugars and saturated fats.  -->
-
-<!-- - The greater odds of eating puddings in the evening might partly explain the undiagnosed/prediabetic state.  -->
 
 
 ---
@@ -307,37 +322,10 @@ class: middle
 
 - Assessing the relationships between less healthy foods and timing of eating is a first step towards identifying specific public health targets for behaviour change/modification.
 
-- Undiagnosed T2D patients might be at higher risk of causing/worsening their condition as they had higher odds to consume a number of less healthy foods after 8pm (sugar-confectionary, biscuits, sweetened soft drinks and puddings).
+- Undiagnosed T2D patients might be at higher risk of causing/worsening their condition as they had higher odds to consume a number of less healthy foods after 8pm (sugar-confectionery, sweetened soft drinks and puddings).
 
 - The survey cross-sectional nature warrants further investigations by longitudinal cohort studies.
 
-
-
----
-background-image: url("./img/CAbook.jpg")
-background-position: 50% 50%
-background-size: contain
-
----
-class: left
-background-image: url("./img/Screen Shot 2019-09-13 at 22.40.12.png")
-background-position: 50% 50%
-background-size: contain
-
-### The Cholera map
-
-.footnote[
-<html><head></head><body><div class="csl-entry">
-<div class="csl-right-inline">N. Shiode, et. al. International journal of health geographics 2015.</div>
-</body></html>
-]
-
-
----
-class: inverse
-background-image: url("./img/Screen Shot 2019-09-13 at 22.29.43.png")
-background-position: 50% 50%
-background-size: contain
 
 
 ---
