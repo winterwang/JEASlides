@@ -1,11 +1,14 @@
 ---
-title: "Associations between food groups and eating time slots by diabetes status in UK adults"
+title: 
+      .med[Associations between food groups and eating time slots by diabetes status in UK adults]
 subtitle: ""
 author: 
-      Chaochen Wang (Aichi Medical University) 
-      Luigi Palla (London School of Hygiene & Tropical Medicine)
+      .small[Chaochen Wang^1^, Suzana Almoosawi^2^, Luigi Palla^3^ <br><br>
+      1. Aichi Medical University <br> 2. NNEdPro Global Centre for Nutrition and Health
+      <br> 3. London School of Hygiene & Tropical Medicine ]
 date: 
-      2020-02-21 15:40 - :16:50 O-024
+      .small[2020-02-21 15:40 - :16:50 O-024<br> 
+       京都大学国際科学イノベーション棟]
 output:
   xaringan::moon_reader:
     css: xaringan-themer.css
