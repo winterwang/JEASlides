@@ -44,7 +44,7 @@ class: middle
 
 - The relationship between food choice and their time of consumption is still largely unknown.
 
-- Identify those unhealthy foods that might be chosen during night time would be helpful. 
+- Identify those unhealthy foods which might be chosen during night time would be helpful. 
 
 - To investigate and describe the relationships between **food** eaten by British adults, **time slots** and **type 2 diabetes status (DM)**.
 
