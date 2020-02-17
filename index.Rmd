@@ -21,14 +21,13 @@ output:
       countIncrementalSlides: false
 ---
 
----
 class: middle, center
 
 # Conflit of Interest disclosure
 
-Chaochen Wang <br>
-Suzana Almoosawi <br>
-Luigi Palla
+Chaochen Wang (AMU) <br>
+Suzana Almoosawi (NNEDPRO)  <br>
+Luigi Palla (LSHTM)
 
 
 We have no, real or perceived, direct or indirect conflicts of interest that relate to this presentation.
