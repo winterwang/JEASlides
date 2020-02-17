@@ -7,8 +7,8 @@ author:
       1. Aichi Medical University <br> 2. NNEdPro Global Centre for Nutrition and Health
       <br> 3. London School of Hygiene & Tropical Medicine ]
 date: 
-      .small[2020-02-21 16:30 - :16:40 O-024<br> 
-       京都大学国際科学イノベーション棟]
+      .small[2020-02-21 16:30〜16:40 O-024<br> 
+       京都大学国際科学イノベーション棟5F]
 output:
   xaringan::moon_reader:
     css: xaringan-themer.css
@@ -39,22 +39,25 @@ class: middle
 
 ## Background & Objectives
 
-
+.med[
 - Eating late/having a late dinner was found to related with higher risk of obesity, hyperglycemia, metabolic syndrome, and diabetes.
 
 - The relationship between food choice and their time of consumption is still largely unknown.
 
 - Identify those unhealthy foods which might be chosen during night time would be helpful. 
 
-- To investigate and describe the relationships between **food** eaten by British adults, **time slots** and **type 2 diabetes status (DM)**.
+- To investigate and describe the relationships between **food** eaten by British adults, **time slots** and **type 2 diabetes (DM)**.
+]
 
-
+???
+NDNS RP: National Diet and Nutrition Survey Rolling Programme
 
 ---
 class: middle 
 
 ## Data Source - the NDNS RP
 
+.med[
 - NDNS RP (started from 2008): 
     - On-going cross-sectional study
     - representative of UK population <br> about 1000/year
@@ -63,22 +66,23 @@ class: middle
 - 6802 adults (age >= 19 years) 
     - 2810 men and 3992 women; 
     - 749,026 recordings of food group entries.
-
+]
 
 ---
 class: middle 
 
 ## Methods and strategies
 
+.med[
 - Correspodence analysis (CA)
     - Biplots in total sample and stratified by DM status
 
 - Logistic regression models using generalized estimating equation (GEE). 
 
-- Generate hypotheses from half of the food recordings, and test using the other half.
+- Generate hypotheses from (randomly selected) 50% of the food recordings then test using the other half.
 
 - Time slots defined: <br> 6-9 am, 9-12 noon, 12-2 pm, 2-5 pm, 5-8 pm, <br> 8-10 pm and 10 pm-6 am.
-
+]
 
 ---
 class: middle, center, inverse
@@ -274,9 +278,9 @@ class:  middle
 ## Summary
 
 .med[
-- Foods colored in **red** for further hypotheses testing as they are considered to be relatively unhealthy and possibly being consumed differently by diabetes status.
+- Foods colored in **red** for further hypotheses testing as they are considered to be relatively unhealthy and possibly being consumed differently by DM status.
 
-- Sugar confectioneries, regular soft drinks, chocolates appear much further at the top of the figures among non diagnosed diabetes patients compared to the other participants. 
+- Sugar confectioneries, regular soft drinks, chocolates appear much further at the top of the figures among those with undiagnosed DM compared to the others. 
 ]
 
 
@@ -293,10 +297,48 @@ class:center
 dt <- read.csv("tab/OR_Tslots.csv", header = TRUE)
 names(dt) <- c("H0", "Overall", "Healthy", "Pre-DM", "Undiag-DM", "DM")
 
-DT::datatable(
+
+library(DT)
+datatable(
   head(dt, 9),  escape=FALSE, 
   fillContainer = FALSE, options = list(pageLength = 5)
-)
+) %>% 
+    formatStyle(
+        .,
+  columns = 5,
+  valueColumns = 0,
+  target = 'cell',
+  backgroundColor = styleEqual(3, 'yellow')
+    ) %>% 
+  formatStyle(
+        .,
+  columns = 5,
+  valueColumns = 0,
+  target = 'cell',
+  backgroundColor = styleEqual(2, 'yellow')
+    ) %>% 
+      formatStyle(
+        .,
+  columns = 6,
+  valueColumns = 0,
+  target = 'cell',
+  backgroundColor = styleEqual(1, 'yellow')
+    ) %>%       
+  formatStyle(
+        .,
+  columns = 6,
+  valueColumns = 0,
+  target = 'cell',
+  backgroundColor = styleEqual(3, 'yellow')
+    ) %>% 
+      formatStyle(
+        .,
+  columns = 6,
+  valueColumns = 0,
+  target = 'cell',
+  backgroundColor = styleEqual(5, 'yellow')
+    )
+  
 ```
 ]
 
@@ -311,7 +353,7 @@ class: middle
 
 - These included alcoholic/sweetened beverages, chocolates and other foods rich in added sugars and saturated fats like biscuits and ice-cream.
 
-- Food and drinks consumed in the evening/night time slot tend to be highly processed and easily accessible.
+- Foods and drinks consumed in the evening/night time tend to be highly processed and easily accessible.
 
 
 
@@ -321,7 +363,7 @@ class: middle
 
 - Assessing the relationships between less healthy foods and timing of eating is a first step towards identifying specific public health targets for behaviour change/modification.
 
-- Undiagnosed T2D patients might be at higher risk of causing/worsening their condition as they had higher odds to consume a number of less healthy foods after 8pm (sugar-confectionery, sweetened soft drinks and puddings).
+- Undiagnosed T2D patients might be at risk of causing/worsening their condition as they had higher odds to consume a number of less healthy foods after 8pm (sugar-confectionery, sweetened soft drinks).
 
 - The survey cross-sectional nature warrants further investigations by longitudinal cohort studies.
 
