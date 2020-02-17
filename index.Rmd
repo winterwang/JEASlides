@@ -1,0 +1,347 @@
+---
+title: "Associations between food groups and eating time slots by diabetes status in UK adults"
+subtitle: ""
+author: 
+      Chaochen Wang (Aichi Medical University) 
+      Luigi Palla (London School of Hygiene & Tropical Medicine)
+date: 
+      2020-02-21 15:40 - :16:50 O-024
+output:
+  xaringan::moon_reader:
+    css: xaringan-themer.css
+    lib_dir: libs
+    nature:
+      countdown: 60000
+      highlightStyle: github
+      highlightLines: true
+      highlightSpans: true
+      countIncrementalSlides: false
+---
+
+
+
+---
+class: middle, center, inverse
+
+# Food group consumption and time slots
+
+---
+class: middle
+
+## Objectives
+
+- To investigate and describe the relationshipt between **food** eaten by British adults, **time slots** and **diabetes status**.
+
+
+---
+background-image: url("./img/Diary1.png")
+background-position: 50% 50%
+background-size: contain
+
+---
+background-image: url("./img/Diary2.png")
+background-position: 50% 50%
+background-size: contain
+
+---
+background-image: url("./img/Diary03.png")
+background-position: 50% 50%
+background-size: contain
+
+
+---
+class: middle 
+
+## Methods and strategies
+
+- Correspodence analysis (CA)
+    - Biplots stratified by diabetes status
+
+- Mixed effect logistic regression using generalized estimating equation (GEE). 
+
+- Generate hypotheses from half of the food recordings, and test using the other half.
+
+- Time slots defined:  6-9 am, 9-12 noon, 12-2 pm, 2-5 pm, 5-8 pm, 8-10 pm and 10 pm-6 am.
+
+---
+class: middle 
+
+## Definition of diabetes
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+library(tidyverse)
+library(knitr)
+library(kableExtra)
+
+dt <- read.csv("tab/DMstatus.csv", header = TRUE)
+names(dt) <- c("Diabetes Status", "Self-reported", "Glucose (mmol/L)", "HbA1c (%)", "n")
+# names(dt)[9] <- "Total"
+# dt[2, 9] <- " "
+# dt[c(4,5), 9] <- " "
+dt %>%
+  kable() %>%
+  kable_styling(bootstrap_options = c("striped", "hover"))  %>% 
+  column_spec(1, bold = T)
+```
+
+
+---
+class: middle 
+
+## Summary statistics 
+
+6802 adults (age >= 19 years), 2810 men and 3992 women from NDNS RP data (2008-2018). 749,026 recordings of food group entries.
+
+.small[
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+load("../CA-NDNSRP/Food1_9_adlt_labl.Rdata")
+
+timeN <- Food1_9_adlt %>% 
+  ungroup() %>% 
+  group_by(MealTimeSlot) %>% 
+  summarise(n = n()) %>% 
+  mutate(relfreq = n/sum(n)) %>% 
+  mutate(rel.freq = paste0(round(100 * n/sum(n), 3), "%"))  %>% 
+  mutate(cum.freq = paste0(round(100 * cumsum(relfreq), 3), "%")) %>% 
+  select(-relfreq)
+
+timeN %>%
+  kable() %>%
+  kable_styling(bootstrap_options = c("striped", "hover"))  %>% 
+  column_spec(1, bold = T)
+```
+]
+
+
+---
+class: middle
+### Food groups and contribution to calories
+
+
+.small[
+```{r echo=FALSE, message=FALSE, eval=TRUE}
+TableFoogGroup_adt <- Food1_9_adlt %>% 
+  ungroup() %>% 
+  group_by(mfgLab) %>% 
+  summarise(n = n(), meanHpoint = mean(H_points, na.rm = T), mfgCalories = sum(Energykcal)) %>% 
+  arrange(-mfgCalories) %>% 
+  mutate(n.freq = paste0(round(100 * n/sum(n), 2), "%"))  %>% 
+  mutate(cal.Prop = paste0(round(100 * mfgCalories/sum(mfgCalories), 2), "%"))  %>% 
+  mutate(calprop = mfgCalories/sum(mfgCalories)) %>% 
+  mutate(calcumprop = paste0(round(100 * cumsum(calprop), 3), "%")) %>% 
+  mutate(Hpoint = round(meanHpoint, 2)) %>% 
+  mutate(healthy     = meanHpoint < -2, 
+         lesshealthy = meanHpoint > 4, 
+         neutral     = (meanHpoint <= 4) & (meanHpoint >= -2)) %>% 
+  select(mfgLab, n, Hpoint, n.freq, cal.Prop, calcumprop)
+
+DT::datatable(
+  head(TableFoogGroup_adt, 60),  escape=FALSE, 
+  fillContainer = FALSE, options = list(pageLength = 6)
+)
+```
+]
+
+
+---
+class: middle, center
+### The full contingency table of food recordings and time slots
+
+.tiny[
+```{r echo=FALSE, tidy=FALSE, warning = FALSE, eval=TRUE}
+load("../CA-NDNSRP/HFood.Rdata")
+freqtab <- xtabs(~HFood$mfgLab + HFood$MealTimeSlot)
+# as.data.frame.matrix(freqtab) %>%
+#   kable() %>%
+#   kable_styling(bootstrap_options = c("striped", "hover"))
+
+# freqtab <- xtabs(~H_teenFood$mfgLab + H_teenFood$Locat)
+
+DT::datatable(
+  head(as.data.frame.matrix(freqtab), 60),  escape=FALSE, 
+  fillContainer = FALSE, options = list(pageLength = 5)
+)
+```
+]
+
+
+
+
+---
+class: middle, center, inverse
+
+# CA biplots in total sample
+
+---
+background-image: url("./img/F60T7.png")
+background-position: 50% 50%
+background-size: contain
+
+???
+
+- It seems that later time in the day (8 pm- 10pm-) are shown on the upper side of the plot. 
+
+- Morning time people are having breakfast foods (cereals/milk)
+
+- Chocolate, Bear, Spirits, sugar candy, sweetened soft drinks are clouded around later times. 
+
+
+---
+background-image: url("./img/F201T7.png")
+background-position: 50% 50%
+background-size: contain
+
+???
+
+- it is clearer that late time slots (8pm - 10pm, 10pm - 6am) are different from the earlier hours in stratified figures by food groups (for better visualisation)
+
+
+
+---
+background-image: url("./img/F202T7.png")
+background-position: 50% 50%
+background-size: contain
+
+
+
+---
+background-image: url("./img/F203T7.png")
+background-position: 50% 50%
+background-size: contain
+
+
+
+---
+class: middle, center, inverse
+
+# Food group consumption and time slots <br> stratified by DM status
+
+
+---
+background-image: url("./img/F60T7_nonDM.png")
+background-position: 50% 50%
+background-size: contain
+
+???
+
+- IN non-diabetes, sugar, beer, wine, crisps, sweetened soft drink, biscuits are more associated with night period time slots. 
+
+
+---
+background-image: url("./img/F60T7_DM.png")
+background-position: 50% 50%
+background-size: contain
+
+???
+
+- For Diagnosed DM patients (self-reported), beer, spirits, chocolate, biscuits, regular sweetened soft drinks are apear close to time after 8 pm. 
+
+
+---
+background-image: url("./img/F60T7_UndiagDM.png")
+background-position: 50% 50%
+background-size: contain
+
+???
+
+- Among undiagnosed DM patients, sugar, chocolate, Beer, regular soft drinks, wine, ice cream, biscuits, Puddings seems to apear to shown in later time slots. 
+
+
+---
+background-image: url("./img/F60T7_PreDM.png")
+background-position: 50% 50%
+background-size: contain
+
+
+---
+class:center
+
+##### OR for food groups eaten at night (8pm - ) vs. earlier time, among total and according to DM status
+
+
+
+
+.between[
+```{r echo=FALSE, message=FALSE, eval=TRUE}
+dt <- read.csv("tab/OR_Tslots.csv", header = TRUE)
+names(dt) <- c("H0", "Overall", "Non-DM", "Pre-DM", "Undiag-DM", "DM")
+# names(dt)[9] <- "Total"
+# dt[2, 9] <- " "
+# dt[c(4,5), 9] <- " "
+# dt %>%
+#   kable() %>%
+#   kable_styling(bootstrap_options = c("striped", "hover"))  %>% 
+#   column_spec(1, bold = T)
+
+DT::datatable(
+  head(dt, 9),  escape=FALSE, 
+  fillContainer = FALSE, options = list(pageLength = 4)
+)
+```
+]
+
+
+---
+class: middle 
+
+# Discussion (1)
+
+
+- All unhealthy foods emerged from CA were significantly more likely to be eaten after 8pm.
+
+- These included alcoholic/sweetened beverages, chocolates and other foods rich in added sugars and saturated fats like biscuits and ice-cream.
+
+- Food and drinks consumed in the evening/night time slot tend to be highly processed and easily accessible.
+
+<!-- - Potentially alcoholic/sweetened beverages and foods rich in added sugars and saturated fats.  -->
+
+<!-- - The greater odds of eating puddings in the evening might partly explain the undiagnosed/prediabetic state.  -->
+
+
+---
+class: middle 
+# Discussion (2)
+
+- Assessing the relationships between less healthy foods and timing of eating is a first step towards identifying specific public health targets for behaviour change/modification.
+
+- Undiagnosed T2D patients might be at higher risk of causing/worsening their condition as they had higher odds to consume a number of less healthy foods after 8pm (sugar-confectionary, biscuits, sweetened soft drinks and puddings).
+
+- The survey cross-sectional nature warrants further investigations by longitudinal cohort studies.
+
+
+
+---
+background-image: url("./img/CAbook.jpg")
+background-position: 50% 50%
+background-size: contain
+
+---
+class: left
+background-image: url("./img/Screen Shot 2019-09-13 at 22.40.12.png")
+background-position: 50% 50%
+background-size: contain
+
+### The Cholera map
+
+.footnote[
+<html><head></head><body><div class="csl-entry">
+<div class="csl-right-inline">N. Shiode, et. al. International journal of health geographics 2015.</div>
+</body></html>
+]
+
+
+---
+class: inverse
+background-image: url("./img/Screen Shot 2019-09-13 at 22.29.43.png")
+background-position: 50% 50%
+background-size: contain
+
+
+---
+class: left, bottom, inverse
+background-image: url("./img/IMG_0258.png")
+background-position: 50% 50%
+background-size: contain
+
+# Thanks 
+
