@@ -74,12 +74,12 @@ class: middle
 ## Methods and strategies
 
 .med[
-- Correspodence analysis (CA)
+- Correspondence analysis (CA)
     - Biplots in total sample and stratified by DM status
 
-- Logistic regression models using generalized estimating equation (GEE). 
-
 - Generate hypotheses from (randomly selected) 50% of the food recordings then test using the other half.
+
+- Logistic regression models using generalized estimating equation (GEE). 
 
 - Time slots defined: <br> 6-9 am, 9-12 noon, 12-2 pm, 2-5 pm, 5-8 pm, <br> 8-10 pm and 10 pm-6 am.
 ]
