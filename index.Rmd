@@ -166,7 +166,7 @@ DT::datatable(
 class: middle, center
 ### The full contingency table of food recordings and time slots
 
-.tiny[
+.small[
 ```{r echo=FALSE, tidy=FALSE, warning = FALSE, eval=TRUE}
 load("../CA-NDNSRP/HFood.Rdata")
 freqtab <- xtabs(~HFood$mfgLab + HFood$MealTimeSlot)
@@ -178,7 +178,7 @@ freqtab <- xtabs(~HFood$mfgLab + HFood$MealTimeSlot)
 
 DT::datatable(
   head(as.data.frame.matrix(freqtab), 60),  escape=FALSE, 
-  fillContainer = FALSE, options = list(pageLength = 5)
+  fillContainer = FALSE, options = list(pageLength = 4)
 )
 ```
 ]
@@ -277,22 +277,23 @@ class:  middle
 
 ## Summary
 
-.med[
-- Foods colored in **red** for further hypotheses testing as they are considered to be relatively unhealthy and possibly being consumed differently by DM status.
+
+- Foods colored in **red** for further hypotheses testing 
+    - relatively unhealthy  
+    - possibly being consumed differently by DM status.
 
 - Sugar confectioneries, regular soft drinks, chocolates appear much further at the top of the figures among those with undiagnosed DM compared to the others. 
-]
 
 
 ---
 class:center
 
-#### OR (99% CI) for foods eaten at night (8pm - 6am) vs. earlier time, among total and according to DM status
+OR (99% CI) for foods eaten at night (8pm - 6am) vs. earlier time, among total and according to DM status
 
 
 
 
-.tiny[
+.small[
 ```{r echo=FALSE, message=FALSE, eval=TRUE}
 dt <- read.csv("tab/OR_Tslots.csv", header = TRUE)
 names(dt) <- c("H0", "Overall", "Healthy", "Pre-DM", "Undiag-DM", "DM")
@@ -301,7 +302,7 @@ names(dt) <- c("H0", "Overall", "Healthy", "Pre-DM", "Undiag-DM", "DM")
 library(DT)
 datatable(
   head(dt, 9),  escape=FALSE, 
-  fillContainer = FALSE, options = list(pageLength = 5)
+  fillContainer = FALSE, options = list(pageLength = 3)
 ) %>% 
     formatStyle(
         .,
@@ -351,7 +352,7 @@ class: middle
 
 - All unhealthy foods emerged from CA were significantly more likely to be eaten after 8pm.
 
-- These included alcoholic/sweetened beverages, chocolates and other foods rich in added sugars and saturated fats like biscuits and ice-cream.
+- These included alcoholic/sweetened beverages, chocolates and other foods rich in added sugars and saturated fats.
 
 - Foods and drinks consumed in the evening/night time tend to be highly processed and easily accessible.
 
@@ -363,7 +364,7 @@ class: middle
 
 - Assessing the relationships between less healthy foods and timing of eating is a first step towards identifying specific public health targets for behaviour change/modification.
 
-- Undiagnosed T2D patients might be at risk of causing/worsening their condition as they had higher odds to consume a number of less healthy foods after 8pm (sugar-confectionery, sweetened soft drinks).
+- Undiagnosed T2D patients might be at risk of causing/worsening their condition as they had higher odds to consume a number of less healthy foods during night time.
 
 - The survey cross-sectional nature warrants further investigations by longitudinal cohort studies.
 

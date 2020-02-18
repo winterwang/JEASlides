@@ -23,7 +23,7 @@
 
 body {
   font-family: Noto Sans JP, 'Palatino Linotype', 'Book Antiqua', Palatino, 'Microsoft YaHei', 'Songti SC', serif;
-  font-weight: 300;
+  font-weight: bold;
   color: #13393A;
 }
 h1, h2, h3 {
@@ -176,6 +176,7 @@ table.dataTable.hover tbody tr:hover, table.dataTable.display tbody tr:hover {
 
 .large { font-size: 130% }
 .med { font-size: 85% }
+.medium { font-size: 78% }
 .small { font-size: 70% }
 .between { font-size: 60% }
 .tiny { font-size: 50% }
