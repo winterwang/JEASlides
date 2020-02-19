@@ -46,7 +46,7 @@ class: middle
 
 - Identify those unhealthy foods which might be chosen during night time would be helpful. 
 
-- To investigate and describe the relationships between **food** eaten by British adults, **time slots** and **type 2 diabetes (DM)**.
+- To investigate the relationships between **food** eaten by British adults, **time slots** and **type 2 diabetes (DM) status**.
 ]
 
 ???
@@ -64,8 +64,10 @@ class: middle
     - 4 consecutive days food diary
     
 - 6802 adults (age >= 19 years) 
-    - 2810 men and 3992 women; 
-    - 749,026 recordings of food group entries.
+    - 2810 men and 3992 women
+    - 749,026 recordings of food group entries
+    - Time slots defined: <br> 6-9 am, 9-12 noon, 12-2 pm, 2-5 pm, 5-8 pm, <br> 8-10 pm and 10 pm-6 am.
+
 ]
 
 ---
@@ -74,14 +76,16 @@ class: middle
 ## Methods and strategies
 
 .med[
+- Generate hypotheses from (randomly selected) 50% of the food recordings then test using the other half
+
 - Correspondence analysis (CA)
+    - Exploratory technique to look for associations between foods and time
     - Biplots in total sample and stratified by DM status
 
-- Generate hypotheses from (randomly selected) 50% of the food recordings then test using the other half.
 
 - Logistic regression models using generalized estimating equation (GEE). 
+    - Estimation of effect size of the association
 
-- Time slots defined: <br> 6-9 am, 9-12 noon, 12-2 pm, 2-5 pm, 5-8 pm, <br> 8-10 pm and 10 pm-6 am.
 ]
 
 ---
@@ -108,7 +112,7 @@ background-size: contain
 ---
 class: middle 
 
-## Definition of diabetes
+## Definition of diabetes status
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
 library(tidyverse)

@@ -58,7 +58,7 @@ You may also realize that it is not possible to see any relationship by simply l
 
 These figures here show the potential associations between time and food groups by the defined diabetes status. 
 
-Correspondence analysis allows us to plot both the points of time and food in the same figure where here we see later time are in the upper side of the graph. And when food and time points are close together and away from the origin then it is suggested that there is an association. 
+Correspondence analysis allows us to plot both the points of time and food in the same figure where here we see later time are in the upper side of the graph. And when food and time points are close together and away from the origin then it is suggested that there is an association. The association is considered to be higher if the distance between food, time is further from the origin.
 
 
 - Therefore, in the graph, food appears close to the time, means they were consumed at that time.
