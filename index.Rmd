@@ -136,7 +136,7 @@ dt %>%
 class: middle
 ### Food groups and contribution to calories
 
-.between[[link to full table: http://wangcc.me/CA-NDNSRP_fordiscuss/#12_food_groups](http://wangcc.me/CA-NDNSRP_fordiscuss/#12_food_groups)]
+.between[[link to full table: https://wangcc.me/CA-NDNSRP_fordiscuss/#12_food_groups](https://wangcc.me/CA-NDNSRP_fordiscuss/#12_food_groups)]
 
 .small[
 ```{r echo=FALSE, message=FALSE, eval=TRUE}
