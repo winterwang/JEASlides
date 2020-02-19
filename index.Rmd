@@ -179,9 +179,13 @@ freqtab <- xtabs(~HFood$mfgLab + HFood$MealTimeSlot)
 #   kable_styling(bootstrap_options = c("striped", "hover"))
 
 # freqtab <- xtabs(~H_teenFood$mfgLab + H_teenFood$Locat)
-
+freqdataframe <- as.data.frame.matrix(freqtab)
+names(freqdataframe) <- c("0600-0900", "0900-1200", 
+                          "1200-1400", "1400-1700",
+                          "1700-2000", "2000-2200",
+                          "2200-0600")
 DT::datatable(
-  head(as.data.frame.matrix(freqtab), 60),  escape=FALSE, 
+  head(freqdataframe, 60),  escape=FALSE, 
   fillContainer = FALSE, options = list(pageLength = 4)
 )
 ```
