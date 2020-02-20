@@ -36,15 +36,15 @@ Half of the food recordings were randomly selected for generating hypotheses, an
 Afterwards, logistic regression models with generalised estimating equation that account for repeated measurements were used to test generated hypotheses, comparing the odds of being consumed later at night to earlier time in the day. 
 
 
-# P6, P7, P8, P9
+# P6, P7, P8, P9裏面
 
-An example of a one-day food diary was shown here. 
+An example of a one-day food diary is shown here. 
 
-Time intervals was defined according to the diary. Time, location, name of foods and preparation details were asked to written down.
+Time intervals was defined according to the diary. Time, location, name of foods and preparation details were asked to recorded.
 
 # P10 
 
-The definitions of diabetes and numbers of subjects are shown in Table 1. 
+The definitions of diabetes and numbers of subjects are shown in this Table. 
 
 # P11
 
@@ -68,7 +68,7 @@ Correspondence analysis allows us to plot both the points of time and food in th
 
 - During morning time people are having breakfast foods (cereals/milk)
 
-- Chocolate, Bear, Spirits, sugar candy, sweetened soft drinks are clouded around later times. 
+- Chocolate, Beer, Spirits, sugar candy, sweetened soft drinks are clouded around later times. 
 
 
 # P15, P16, P17, P18, P19, P20
