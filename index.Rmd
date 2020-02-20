@@ -386,3 +386,8 @@ background-size: contain
 
 # Thanks 
 
+
+---
+background-image: url("./img/MissDM.png")
+background-position: 50% 50%
+background-size: contain
